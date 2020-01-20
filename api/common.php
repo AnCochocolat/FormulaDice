@@ -1,5 +1,5 @@
 <?php
-function getUserDB($sql,$param=[]){
+function operate_DB($sql,$param=[]){
     $dsn  = 'mysql:dbname = db1337;host=localhost';
     $user = 'my1337';
     $pw   = 'kghtaffr';
