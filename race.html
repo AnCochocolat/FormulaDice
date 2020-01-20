@@ -20,13 +20,123 @@
             color: blue;
             background-color: rgba(255, 255, 255,0.5);
         }
+        .player{
+
+        }
     </style>
 </head>
 <body>
-    <h1 id="title"> Race</h1>
+    <h1 id="title"> Formula Dice SPA GP!</h1>
+    <button id="roll-dice">ROLL THE DICE!</button>
+<div id = "message-window">
+    <div style="padding: 10px; margin-bottom: 10px; border: 5px double #333333;">
+        messagewindow
+        <div id="dice-number">dice number</div>
+        <h3 id="event">events</h3>
+        <h2 id="event-title">event title</h2>
+        <div id="event-description">event description</div>
+    </div>
+</div>
+<div id  = "players">
+     <div id="player1" class="player">
+        <h2>player1</h2>
+        <div id= "current-mileage">current mileage</div>
+        <div id="remain-distance">remain distance</div>
+        <div id="event-mileage">event mileage</div>
+     </div>
+     <div id="player2" class="player">
+            <h2>player2</h2>
+            <div id= "current-mileage">current mileage</div>
+            <div id="remain-distance">remain distance</div>
+            <div id="event-mileage">event mileage</div>
+         </div>
+         <div id="player3" class="player">
+                <h2>player3</h2>
+                <div id= "current-mileage">current mileage</div>
+                <div id="remain-distance">remain distance</div>
+                <div id="event-mileage">event mileage</div>
+             </div>
+             <div id="player4" class="player">
+                    <h2>player4</h2>
+                    <div id= "current-mileage">current mileage</div>
+                    <div id="remain-distance">remain distance</div>
+                    <div id="event-mileage">event mileage</div>
+                 </div>
+</div>
 
     <form action="result.html">
         <button id="btn-next">START</button>
     </form>
+    <p id="ctest"></p>
+    <script>
+        const event_start_mileage = 20;
+        const max_distance = 150;
+        let number_of_people = 2;
+        let player_count = 0;
+        let players_mileage = [0,0,0,0];
+        let players_event_mileage = [0,0,0,0];
+        //プレイヤーの数値をリセット
+    let players = document.querySelectorAll(".player");
+    for(let i = 0; i < 4;i++){
+        players[i].querySelector("#current-mileage").innerHTML = 0;
+        players[i].querySelector("#remain-distance").innerHTML = max_distance;
+        players[i].querySelector("#event-mileage").innerHTML = 0;
+    }
+    //サイコロを振ったときの処理
+    document.querySelector("#roll-dice").addEventListener("click",(e)=>{
+        players_mileage[player_count] += 3;
+        players_event_mileage[player_count] += 3;
+document.querySelector("#dice-number").innerHTML = 3;
+players[player_count].querySelector("#current-mileage").innerHTML = players_mileage[player_count];
+players[player_count].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[player_count];
+if(players_mileage[player_count] >= max_distance){
+    players[player_count].querySelector("#current-mileage").innerHTML = max_distance;
+        players[player_count].querySelector("#remain-distance").innerHTML = "GOAL!"; 
+        return;       
+}
+else if(players_mileage[player_count] <= 0){
+    players[player_count].querySelector("#current-mileage").innerHTML = 0;
+}
+
+
+
+player_count++;
+if(player_count >= number_of_people){
+    player_count = 0;
+}
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+    //timer methods
+    let counter = 1;
+    let ctest = document.querySelector("#ctest");
+// タイマーセット
+let timer = setInterval( () => {
+  counter++;
+  ctest.innerHTML = counter;
+  //window.location.reload(false);
+  // ここに繰り返したい処理を書く
+  //console.log("Hello");
+
+  // タイマー解除
+  //if( counter > 5 ){
+   // clearInterval(timer);
+  //}
+}, 1000);  // 間隔はミリ秒で指定
+
+//timer methods
+
+
+    </script>
 </body>
 </html>
