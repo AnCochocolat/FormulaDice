@@ -43,9 +43,12 @@
             else{
                 let input=encodeURIComponent(name.value);
                 fetch("/FormulaDice/api/add_user.php?name="+input)
-                .then(()=>{
-                    location.assign('room.html');                
-                    });   
+                .then((res)=>{
+                    return res.json();
+                })
+                .then((json)=>{
+                    location.href = 'room.html?id='+encodeURIComponent(json);
+                });   
 			}
         });
     </script>
