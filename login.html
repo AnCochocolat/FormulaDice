@@ -47,7 +47,8 @@
                     return res.json();
                 })
                 .then((json)=>{
-                    location.href = 'room.html?id='+encodeURIComponent(json);
+                    let id=json["id"];
+                    location.href = 'room.html?id='+encodeURIComponent(id);
                 });   
 			}
         });

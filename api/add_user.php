@@ -5,10 +5,10 @@ $name=$_GET['name'];
 
 add_DB('insert into UserData(name) values(?)',[$name]);
 
-$id = get_DB('select id from UserData where max(id)');
+$data = get_DB('select max(id) as maxid from UserData');
 
 $param = [
-    'id' => $id
+    'id' => $data['maxid']
 ];
 
 echo json_encode($param);
