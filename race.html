@@ -262,7 +262,6 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
     players[player_count].querySelector("#current-mileage").innerHTML = players_mileage[player_count];
     players[player_count].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[player_count];
     }
-    alert(event_num);
     //イベント名称と効果の更新
     document.querySelector("#event-title").innerHTML = "player:" + (player_count + 1) + " " + event_title;
     document.querySelector("#event-description").innerHTML = event_desc;
