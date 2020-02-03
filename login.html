@@ -48,8 +48,9 @@
                 })
                 .then((json)=>{
                     let id=json["id"];
-                    location.href = 'room.html?id='+encodeURIComponent(id);
-                });   
+                    let leader=json["is_leader"];
+                    location.href = 'room.html?id='+encodeURIComponent(id)+'leader='+encodeURIComponent(leader);
+                });
 			}
         });
     </script>
