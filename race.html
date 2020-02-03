@@ -19,6 +19,7 @@
             font-size: 48pt;
             color: blue;
             background-color: rgba(255, 255, 255,0.5);
+            padding-bottom: 0%;
         }
         .player{
 display: inline-block;
@@ -31,17 +32,17 @@ width: 250px;
     </style>
 </head>
 <body>
-    <h1 id="title"> Formula Dice nurburgring GP!</h1>
+    <h1 id="title"> Formula Dice GP!</h1>
     <button id="roll-dice">ROLL THE DICE!</button>
     <button id="attack-mode">ATTACK MODE!</button>
 <div id = "message-window">
     <div style="padding: 10px; margin-bottom: 10px; border: 5px double #333333;">
-        <p>messagewindow</p>
+        <p>メッセージ</p>
         <span id="player_name"></span>
         <span id="dice-number"></span>
-        <h3 id="event">events</h3>
-        <h2 id="event-title">event title</h2>
-        <div id="event-description">event description</div>
+        <h3 id="event">イベント</h3>
+        <h2 id="event-title"> </h2><br>
+        <div id="event-description"> </div><br>
     </div>
 </div>
 <div id  = "players">
@@ -127,16 +128,14 @@ width: 250px;
                  </div>
 </div>
 
-    <form action="result.html">
-        <button id="btn-next">START</button>
-    </form>
+
     <p id="ctest"></p>
     <script>
 
-        const max_distance = 100;
-        let number_of_people = 2;//プレイヤーの数
+        const max_distance = 110;
+        let number_of_people = 4;//プレイヤーの数
         let player_count = 0;
-        let players_mileage = [0,0,0,0];
+        let players_mileage = [0,0,0,0];//移動距離
         const event_start_mileage = 20;
         let event_mileage = [0,0,0,0];
         let  players_attack_mode_count = [0,0,0,0];//アタックモードのターン数のカウント
@@ -145,7 +144,9 @@ width: 250px;
         let dice_result = 0;
         let normal_dice = [0,1,2,4,5,8,10];
         let attack_dice = [0,5,8,10,12,14,20];
+        let slow_dice = [0,1,1,2,2,3,3];
         let attack_mode_use = [0,0,0,0];    
+        let is_slow = false;
         document.querySelector("#player_name").innerHTML = "player" + (player_count + 1) + " :"
         //プレイヤーの数値をリセット
     let players = document.querySelectorAll(".player");
@@ -166,6 +167,9 @@ width: 250px;
         event_mileage[player_count] -= dice_result;
         players_attack_mode_count[player_count] -= 1;
         players[player_count].querySelector("#attack-mode-remain").innerHTML = players_attack_mode_count[player_count];
+        }
+        else if(is_slow){
+
         }
         else{
             dice_number = getRandom(-1,6);
@@ -238,13 +242,19 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
 
     //イベント発生時の処理
     function EventUpdate(){
-
-    let event_num = getRandom(0,2);
-
+//alert(Math.max.apply(null,players_mileage));
+    let event_num = getRandom(0,11);
+    //event_num = 11;
     let event_move = 0;
-    let event_title_array = ["スピン！","DRS起動!","FCY!"];//イベント名称
-    let event_desc_array = ["2km戻る！","4km進む!","全員3km進む！"];//イベント効果
-    let event_move_array = [-2,4,3];//イベントの結果動くマス数
+    let event_title_array = ["スピン！","DRS起動!","FCY!","EngineMode 11 Position 5","I have NO POWER!"
+    ,"「この周プッシュして！」","Smooth Operator～♪","GP2 Engine!!","ドライブスルーペナルティ！","掟破りの地元走り"
+    ,"アンダーカット成功！","オーバーカット成功！"];//イベント名称
+    let event_desc_array = ["2km戻る！","5km進む!","全員3km進む！","8km進む！","10km戻る！"
+    ,"3km進む!","5km進む！","5km戻る！","6km戻る！","5km進む!"
+    ,"自分は2km進み、ライバルは3km戻る！","自分は3km進み、ライバルは2km戻る！"];//イベント効果
+    let event_move_array = [-2,4,3,5,-10
+    ,3,5,-5,-6,5
+    ,0,0];//イベントの結果動くマス数
     let event_title = event_title_array[event_num];
     let event_desc = event_desc_array[event_num];
     if(event_num == 2){
@@ -252,6 +262,35 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
             for(let i = 0; i < number_of_people;i++){
                 event_move = event_move_array[event_num];
             players_mileage[i] += event_move;
+        players[i].querySelector("#current-mileage").innerHTML = players_mileage[i];
+        players[i].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[i];
+        }
+    }
+    else if(event_num == 100){
+        //SC 
+    }
+    else if(event_num == 10){
+        for(let i = 0; i < number_of_people;i++){
+            if(i == player_count){
+                event_move = 2;
+            players_mileage[i] += event_move;
+            }else{
+                event_move = -3;
+            players_mileage[i] += event_move;
+            }
+        players[i].querySelector("#current-mileage").innerHTML = players_mileage[i];
+        players[i].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[i];
+        }
+    }
+    else if(event_num == 11){
+        for(let i = 0; i < number_of_people;i++){
+            if(i == player_count){
+                event_move = 3;
+            players_mileage[i] += event_move;
+            }else{
+                event_move = -2;
+            players_mileage[i] += event_move;
+            }
         players[i].querySelector("#current-mileage").innerHTML = players_mileage[i];
         players[i].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[i];
         }
@@ -265,12 +304,14 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
     //イベント名称と効果の更新
     document.querySelector("#event-title").innerHTML = "player:" + (player_count + 1) + " " + event_title;
     document.querySelector("#event-description").innerHTML = event_desc;
-
     }
     function Move(num){
         players_mileage[player_count] += num;
             event_mileage[player_count] -= num;
     }
+    function compareFunc(a, b) {
+  return b - a;
+}
 //最大値・最小値を引数に持つ関数
 function getRandom( min, max ) {
     var random = Math.floor( Math.random() * (max + 1 - min) ) + min;
@@ -282,8 +323,6 @@ window.onbeforeunload = function(e) {
     
     //e.returnValue = "hontouni";
   }
-
-
       //timer methods
       let counter = 1;
     let ctest = document.querySelector("#ctest");
@@ -293,6 +332,13 @@ let timer = setInterval( () => {
   counter++;
   ctest.innerHTML = counter;
   frame_update = true;
+ /* fetch("/Quiz/api/question.php") 
+    .then( (res)=>{ return res.json(); }) 
+    .then( (json)=>{ // ここに受信時の処理 
+    document.querySelector("#text-question").innerHTML = json["text"];
+    document.querySelector("#qid").value = json["qid"];
+    });
+    */
   //window.location.reload(false);
   // ここに繰り返したい処理を書く
   //console.log("Hello");
