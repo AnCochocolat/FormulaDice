@@ -9,24 +9,33 @@ $data = get_DB('select max(id) as maxid from UserData');
 
 $myid=$data['maxid'];
 
-$result=get_DB('select room_name from RoomList where is_join=0 limit 1');
+$result=get_DB('select room_name as room_Name from RoomList where is_join=1 limit 1');
+
+$result_room=$result['room_Name'];
 
 $leader=false;
 
+$room = $myid."_room";
+
 if($result)
 {
-    add_DB('insert into {$result}(name) values(?)',[$name]);
-    
+    $sql="insert into $result_room(name) values(?)";
+    add_DB($sql,[$name]);
 }
 else
 {
-    $sql="create table '{$myid}'_room(id int AUTO_INCREMENT, name varchar(64))";
+    $sql="create table $room(id int AUTO_INCREMENT, name varchar(64),PRIMARY KEY(id))";
 
     add_DB($sql);
 
-    $sql="insert into RoomList(room_name,is_join) values('{$myid}'_room,0)";
+    $sql="insert into RoomList(room_name,is_join) values(?,1)";
 
-    add_DB($sql);
+    add_DB($sql,[$room]);
+
+    $sql="insert into $room(name) values(?)";
+
+    add_DB($sql,[$name]);
+
 
     $leader=true;
 }
