@@ -21,17 +21,24 @@
             background-color: rgba(255, 255, 255,0.5);
         }
         .player{
+display: inline-block;
+width: 250px;
+	height: 50px;
+	padding: 50px;
 
+    margin-bottom: 60px;
         }
     </style>
 </head>
 <body>
-    <h1 id="title"> Formula Dice SPA GP!</h1>
+    <h1 id="title"> Formula Dice nurburgring GP!</h1>
     <button id="roll-dice">ROLL THE DICE!</button>
+    <button id="attack-mode">ATTACK MODE!</button>
 <div id = "message-window">
     <div style="padding: 10px; margin-bottom: 10px; border: 5px double #333333;">
-        messagewindow
-        <div id="dice-number">dice number</div>
+        <p>messagewindow</p>
+        <span id="player_name"></span>
+        <span id="dice-number"></span>
         <h3 id="event">events</h3>
         <h2 id="event-title">event title</h2>
         <div id="event-description">event description</div>
@@ -40,27 +47,83 @@
 <div id  = "players">
      <div id="player1" class="player">
         <h2>player1</h2>
-        <div id= "current-mileage">current mileage</div>
-        <div id="remain-distance">remain distance</div>
-        <div id="event-mileage">event mileage</div>
+        <img src="Car.png" width="100" height="100">
+        <br>
+        <span>走行距離 :</span>
+        <span id= "current-mileage">0</span>
+        <span>km</span>
+        <br>
+        <span>残りの距離 :</span>
+        <span id="remain-distance">0</span>
+        <span>km</span>
+        <br>
+        <sapn>イベント発生まで :</sapn>
+        <span id="event-mileage">0</span>
+        <span>km</span>
+        <br>
+        <span>アタックモード あと :</span>
+        <sapn id = "attack-mode-remain">0</sapn>
+        <span>回</span>
      </div>
      <div id="player2" class="player">
             <h2>player2</h2>
-            <div id= "current-mileage">current mileage</div>
-            <div id="remain-distance">remain distance</div>
-            <div id="event-mileage">event mileage</div>
+            <img src="Car.png" width="100" height="100">
+            <br>
+            <span>走行距離 :</span>
+            <span id= "current-mileage">0</span>
+            <span>km</span>
+            <br>
+            <span>残りの距離 :</span>
+            <span id="remain-distance">0</span>
+            <span>km</span>
+            <br>
+            <sapn>イベント発生まで :</sapn>
+            <span id="event-mileage">0</span>
+            <span>km</span>
+            <br>
+            <span>アタックモード あと :</span>
+            <sapn id = "attack-mode-remain">0</sapn>
+            <span>回</span>
          </div>
          <div id="player3" class="player">
                 <h2>player3</h2>
-                <div id= "current-mileage">current mileage</div>
-                <div id="remain-distance">remain distance</div>
-                <div id="event-mileage">event mileage</div>
+                <img src="Car.png" width="100" height="100">
+                <br>
+                <span>走行距離 :</span>
+                <span id= "current-mileage">0</span>
+                <span>km</span>
+                <br>
+                <span>残りの距離 :</span>
+                <span id="remain-distance">0</span>
+                <span>km</span>
+                <br>
+                <sapn>イベント発生まで :</sapn>
+                <span id="event-mileage">0</span>
+                <span>km</span>
+                <br>
+                <span>アタックモード あと :</span>
+                <sapn id = "attack-mode-remain">0</sapn>
+                <span>回</span>
              </div>
              <div id="player4" class="player">
                     <h2>player4</h2>
-                    <div id= "current-mileage">current mileage</div>
-                    <div id="remain-distance">remain distance</div>
-                    <div id="event-mileage">event mileage</div>
+                    <img src="Car.png" width="100" height="100">
+                    <br>
+                    <span>走行距離 :</span>
+                    <span id= "current-mileage">0</span>
+                    <span>km</span>
+                    <br>
+                    <span>残りの距離 :</span>
+                    <span id="remain-distance">0</span>
+                    <span>km</span>
+                    <br>
+                    <sapn>イベント発生まで :</sapn>
+                    <span id="event-mileage">0</span>
+                    <span>km</span>
+                    <br>
+                    <span>アタックモード あと :</span>
+                    <sapn id = "attack-mode-remain">0</sapn>
+                    <span>回</span>
                  </div>
 </div>
 
@@ -69,61 +132,160 @@
     </form>
     <p id="ctest"></p>
     <script>
-        const event_start_mileage = 20;
+
         const max_distance = 150;
-        let number_of_people = 2;
+        let number_of_people = 2;//プレイヤーの数
         let player_count = 0;
         let players_mileage = [0,0,0,0];
-        let players_event_mileage = [0,0,0,0];
+        const event_start_mileage = 20;
+        let event_mileage = [0,0,0,0];
+        let  players_attack_mode_count = [0,0,0,0];//アタックモードのターン数のカウント
+        const attack_mode_count = 5;
+        let dice_number = 0;
+        let normal_dice = [0,1,2,4,5,8,10];
+        let attack_dice = [0,5,8,10,12,14,20];
+        let attack_mode_use = [0,0,0,0];    
+        document.querySelector("#player_name").innerHTML = "player" + (player_count + 1) + " :"
         //プレイヤーの数値をリセット
     let players = document.querySelectorAll(".player");
     for(let i = 0; i < 4;i++){
         players[i].querySelector("#current-mileage").innerHTML = 0;
         players[i].querySelector("#remain-distance").innerHTML = max_distance;
-        players[i].querySelector("#event-mileage").innerHTML = 0;
+        players[i].querySelector("#event-mileage").innerHTML = event_start_mileage;
+        event_mileage[i] = event_start_mileage;
     }
+
     //サイコロを振ったときの処理
     document.querySelector("#roll-dice").addEventListener("click",(e)=>{
-        players_mileage[player_count] += 3;
-        players_event_mileage[player_count] += 3;
-document.querySelector("#dice-number").innerHTML = 3;
+        if(players_attack_mode_count[player_count] > 0){
+            dice_number = getRandom(-3,6);
+            if(dice_number <= 0)dice_number = 0;
+            players_mileage[player_count] += attack_dice[dice_number];
+        event_mileage[player_count] -= attack_dice[dice_number];
+        players_attack_mode_count[player_count] -= 1;
+        players[player_count].querySelector("#attack-mode-remain").innerHTML = players_attack_mode_count[player_count];
+        }
+        else{
+            dice_number = getRandom(-1,6);
+            if(dice_number <= 0)dice_number = 0;
+        players_mileage[player_count] += normal_dice[dice_number];
+        event_mileage[player_count] -= normal_dice[dice_number];
+        }
+        let windownum = dice_number;
+        if(dice_number <= 0)dice_number = "miss!";
+document.querySelector("#dice-number").innerHTML = dice_number;
 players[player_count].querySelector("#current-mileage").innerHTML = players_mileage[player_count];
 players[player_count].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[player_count];
+players[player_count].querySelector("#event-mileage").innerHTML = event_mileage[player_count];
+//最大距離を越えたらゴール　0以下の距離にはならない
 if(players_mileage[player_count] >= max_distance){
     players[player_count].querySelector("#current-mileage").innerHTML = max_distance;
         players[player_count].querySelector("#remain-distance").innerHTML = "GOAL!"; 
+        document.getElementById("roll-dice").disabled = "disabled";
+        e.preventDefault();
         return;       
 }
 else if(players_mileage[player_count] <= 0){
     players[player_count].querySelector("#current-mileage").innerHTML = 0;
 }
 
-
-
-player_count++;
-if(player_count >= number_of_people){
-    player_count = 0;
-}
+        if(event_mileage[player_count] <= 0){
+            alert(event_mileage[player_count]);
+            event_mileage[player_count] = event_start_mileage;
+            players[player_count].querySelector("#event-mileage").innerHTML = event_mileage[player_count];
+            EventUpdate();
+        }
+TurnUpdate();
     });
+//アタックモードを押したとき
+document.querySelector("#attack-mode").addEventListener("click",(e)=>{
+    players_attack_mode_count[player_count] = attack_mode_count;
+   players[player_count].querySelector("#attack-mode-remain").innerHTML = players_attack_mode_count[player_count];
+   document.getElementById("attack-mode").disabled = "disabled";
+   attack_mode_use[player_count] = 1;
+    TurnUpdate();
+});
+    //プレイヤーのターンを更新
+    function TurnUpdate(){
+    player_count++;
+
+    if(player_count >= number_of_people){
+        player_count = 0;
+    }
+    document.getElementById("roll-dice").disabled = "disabled";
+    let counter01 = 0;
+    let timer01 = setInterval(() => {
+        counter01++;
+        if(counter01 > 1){
+            document.getElementById("roll-dice").disabled = "";
+            document.querySelector("#player_name").innerHTML = "player" + (player_count + 1) + " :"
+            document.querySelector("#dice-number").innerHTML = "";
+            if(attack_mode_use[player_count] == 1){
+            document.getElementById("attack-mode").disabled = "disabled";
+            }
+            else{
+                document.getElementById("attack-mode").disabled = "";
+            }
+            clearInterval(timer01);
+        }
+    }, 1000);
+    }
+
+    //イベント発生時の処理
+    function EventUpdate(){
+    let event_num = getRandom(0,2);
+    let event_move = 0;
+    let event_title_array = ["スピン！","DRS起動!","FCY!"];//イベント名称
+    let event_desc_array = ["2km戻る！","4km進む!","全員3km進む！"];//イベント効果
+    let event_move_array = [-2,4,3];//イベントの結果動くマス数
+    let event_title = event_title_array[event_num];
+    let event_desc = event_desc_array[event_num];
+    if(event_num == 2){
+            //全員3マス進む
+            for(let i = 0; i < number_of_people;i++){
+                event_move = event_move_array[event_num];
+            players_mileage[i] += move;
+        players[i].querySelector("#current-mileage").innerHTML = players_mileage[i];
+        players[i].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[i];
+        }
+    }
+    else{
+        event_move = event_move_array[event_num];
+        players_mileage[player_count] += move;
+    players[player_count].querySelector("#current-mileage").innerHTML = players_mileage[player_count];
+    players[player_count].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[player_count];
+    }
+    //イベント名称と効果の更新
+    document.querySelector("#event-title").innerHTML = event_title;
+    document.querySelector("#event-description").innerHTML = event_desc;
+
+    }
+    function Move(num){
+        players_mileage[player_count] += num;
+            event_mileage[player_count] -= num;
+    }
+//最大値・最小値を引数に持つ関数
+function getRandom( min, max ) {
+    var random = Math.floor( Math.random() * (max + 1 - min) ) + min;
+  
+    return random;
+}
+window.onbeforeunload = function(e) {
+    //if(frame_update)return
+    
+    //e.returnValue = "hontouni";
+  }
 
 
-
-
-
-
-
-
-
-
-
-
-    //timer methods
-    let counter = 1;
+      //timer methods
+      let counter = 1;
     let ctest = document.querySelector("#ctest");
+    let frame_update = false;
 // タイマーセット
 let timer = setInterval( () => {
   counter++;
   ctest.innerHTML = counter;
+  frame_update = true;
   //window.location.reload(false);
   // ここに繰り返したい処理を書く
   //console.log("Hello");
@@ -135,8 +297,6 @@ let timer = setInterval( () => {
 }, 1000);  // 間隔はミリ秒で指定
 
 //timer methods
-
-
     </script>
 </body>
 </html>
