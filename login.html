@@ -49,7 +49,7 @@
                 .then((json)=>{
                     let id=json["id"];
                     let leader=json["is_leader"];
-                    location.href = 'room.html?id='+encodeURIComponent(id)+'leader='+encodeURIComponent(leader);
+                    location.href = 'room.html?id='+encodeURIComponent(id)+'&leader='+encodeURIComponent(leader);
                 });
 			}
         });
