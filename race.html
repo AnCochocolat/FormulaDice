@@ -133,7 +133,7 @@ width: 250px;
     <p id="ctest"></p>
     <script>
 
-        const max_distance = 150;
+        const max_distance = 100;
         let number_of_people = 2;//プレイヤーの数
         let player_count = 0;
         let players_mileage = [0,0,0,0];
@@ -142,6 +142,7 @@ width: 250px;
         let  players_attack_mode_count = [0,0,0,0];//アタックモードのターン数のカウント
         const attack_mode_count = 5;
         let dice_number = 0;
+        let dice_result = 0;
         let normal_dice = [0,1,2,4,5,8,10];
         let attack_dice = [0,5,8,10,12,14,20];
         let attack_mode_use = [0,0,0,0];    
@@ -160,20 +161,22 @@ width: 250px;
         if(players_attack_mode_count[player_count] > 0){
             dice_number = getRandom(-3,6);
             if(dice_number <= 0)dice_number = 0;
-            players_mileage[player_count] += attack_dice[dice_number];
-        event_mileage[player_count] -= attack_dice[dice_number];
+            dice_result = attack_dice[dice_number];
+            players_mileage[player_count] += dice_result;
+        event_mileage[player_count] -= dice_result;
         players_attack_mode_count[player_count] -= 1;
         players[player_count].querySelector("#attack-mode-remain").innerHTML = players_attack_mode_count[player_count];
         }
         else{
             dice_number = getRandom(-1,6);
             if(dice_number <= 0)dice_number = 0;
-        players_mileage[player_count] += normal_dice[dice_number];
-        event_mileage[player_count] -= normal_dice[dice_number];
+            dice_result = normal_dice[dice_number];
+        players_mileage[player_count] += dice_result;
+        event_mileage[player_count] -= dice_result;
         }
-        let windownum = dice_number;
-        if(dice_number <= 0)dice_number = "miss!";
-document.querySelector("#dice-number").innerHTML = dice_number;
+        let windownum = dice_result
+        if(dice_result <= 0)dice_result = "miss!";
+document.querySelector("#dice-number").innerHTML =dice_result;
 players[player_count].querySelector("#current-mileage").innerHTML = players_mileage[player_count];
 players[player_count].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[player_count];
 players[player_count].querySelector("#event-mileage").innerHTML = event_mileage[player_count];
@@ -190,12 +193,14 @@ else if(players_mileage[player_count] <= 0){
 }
 
         if(event_mileage[player_count] <= 0){
-            alert(event_mileage[player_count]);
             event_mileage[player_count] = event_start_mileage;
             players[player_count].querySelector("#event-mileage").innerHTML = event_mileage[player_count];
             EventUpdate();
+            TurnUpdate();
+        }else{
+            TurnUpdate();
         }
-TurnUpdate();
+
     });
 //アタックモードを押したとき
 document.querySelector("#attack-mode").addEventListener("click",(e)=>{
@@ -233,7 +238,9 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
 
     //イベント発生時の処理
     function EventUpdate(){
+
     let event_num = getRandom(0,2);
+
     let event_move = 0;
     let event_title_array = ["スピン！","DRS起動!","FCY!"];//イベント名称
     let event_desc_array = ["2km戻る！","4km進む!","全員3km進む！"];//イベント効果
@@ -244,19 +251,20 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
             //全員3マス進む
             for(let i = 0; i < number_of_people;i++){
                 event_move = event_move_array[event_num];
-            players_mileage[i] += move;
+            players_mileage[i] += event_move;
         players[i].querySelector("#current-mileage").innerHTML = players_mileage[i];
         players[i].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[i];
         }
     }
     else{
         event_move = event_move_array[event_num];
-        players_mileage[player_count] += move;
+        players_mileage[player_count] += event_move;
     players[player_count].querySelector("#current-mileage").innerHTML = players_mileage[player_count];
     players[player_count].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[player_count];
     }
+    alert(event_num);
     //イベント名称と効果の更新
-    document.querySelector("#event-title").innerHTML = event_title;
+    document.querySelector("#event-title").innerHTML = "player:" + (player_count + 1) + " " + event_title;
     document.querySelector("#event-description").innerHTML = event_desc;
 
     }
