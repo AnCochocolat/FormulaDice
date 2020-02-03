@@ -41,6 +41,7 @@
 				e.preventDefault();
 			}
             else{
+                document.querySelector("#btn-next").disabled = true;
                 let input=encodeURIComponent(name.value);
                 fetch("/FormulaDice/api/add_user.php?name="+input)
                 .then((res)=>{
