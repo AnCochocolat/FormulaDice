@@ -20,9 +20,13 @@ if($result)
 }
 else
 {
-    add_DB('create table {$myid}_room(id int AUTO_INCREMENT, name varchar(64))');
+    $sql="create table '{$myid}'_room(id int AUTO_INCREMENT, name varchar(64))";
 
-    add_DB('insert into RoomList(room_name,is_join) values({$myid}_room,0)');
+    add_DB($sql);
+
+    $sql="insert into RoomList(room_name,is_join) values('{$myid}'_room,0)";
+
+    add_DB($sql);
 
     $leader=true;
 }
