@@ -11,24 +11,47 @@
             text-align: center;
             padding-top:50px; 
         }
-        #btn-next{
-            width: 120px;
-            height: 40px;
-        }
         #title{
             font-size: 48pt;
             color: blue;
             background-color: rgba(255, 255, 255,0.5);
         }
+        #btn-next{
+            width: 120px;
+            height: 40px;
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
     <h1 id="title"> Login</h1>
-    <form action="room.html">
-        <input type="text" id="text-myname" name="myname">  
-        <button id="btn-answer">Create Room</button>   
-    <form action="room.html">
-        <button id="btn-next">Join Room</button>
+    <form>
+        Name<br>
+        <input type="text" id="text-myname" name="myname"><br>  
+        <button type="button" id="btn-next">Enter</button>
     </form>
+
+    <script>
+        document.querySelector("#btn-next").addEventListener("click",(e)=>{
+            const name=document.querySelector("#text-myname");
+            if(name.value==""){
+				alert("名前を入力してください");
+				name.focus();
+				name.style.backgroundColor="Pink";
+				e.preventDefault();
+			}
+            else{
+                let input=encodeURIComponent(name.value);
+                fetch("/FormulaDice/api/add_user.php?name="+input)
+                .then((res)=>{
+                    return res.json();
+                })
+                .then((json)=>{
+                    let id=json["id"];
+                    location.href = 'room.html?id='+encodeURIComponent(id);
+                });   
+			}
+        });
+    </script>
 </body>
 </html>
