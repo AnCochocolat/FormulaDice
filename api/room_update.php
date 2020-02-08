@@ -1,23 +1,17 @@
 <?php
 require_once('common.php');
 
-//リーダーの名前
-$leader_name=$_GET['leader_name'];
+//走行距離取得
+$c_mileage=$_GET['current_mileage'];
 
-//自身の名前
-$name=$_GET['name'];
+//残りの距離取得
+$remain_distance=$_GET['distance'];
 
-//ゴールまでの距離
-$last_meter=$_GET['last_meter'];
+//イベント発生まで取得
+$e_mileage=$_GET['event_mileage'];
 
-//アタックカウント
-$attack_count=$_GET['attack_count'];
-
-//プレイヤーのid
-$id=$_GET['player_id'];
-
-
-
+//アタックモード回数取得
+$attack_count=$_GET['attack_mode_count'];
 
 
 

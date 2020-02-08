@@ -24,7 +24,15 @@ if($result)
 }
 else
 {
-    $sql="create table $room(id int AUTO_INCREMENT, name varchar(64),PRIMARY KEY(id))";
+    $sql="create table $room(
+        id int AUTO_INCREMENT, 
+        name varchar(64),
+        int _c_mileage,
+        int _distance,
+        int _e_mileage,
+        int _attack_count,
+        PRIMARY KEY(id)
+        )";
 
     add_DB($sql);
 
