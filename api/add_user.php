@@ -27,10 +27,10 @@ else
     $sql="create table $room(
         id int AUTO_INCREMENT, 
         name varchar(64),
-        int _c_mileage,
-        int _distance,
-        int _e_mileage,
-        int _attack_count,
+        _c_mileage int default 0,
+        _distance int default 110,
+        _e_mileage int default 20,
+        _attack_count int default 5,
         PRIMARY KEY(id)
         )";
 
