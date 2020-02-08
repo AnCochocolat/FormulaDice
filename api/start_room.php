@@ -1,14 +1,21 @@
 <?php
 require_once('common.php');
 
-//id取得
-$id=$_GET['id'];
+//リーダーフラグ取得
+$leader_check=$_GET['leader'];
 
-//ルーム名
-$room=$id."_room";
+//リーダーだったら
+if($leader_check){
+    
+    //id取得
+    $id=$_GET['id'];
 
-//is_joinを0にするsqlを作成
-$sql="update RoomList set is_join=0 where room_name=$room";
+    //ルーム名
+    $room=$id."_room";
 
-//sqlに適応
-add_DB($sql);
+    //is_joinを0にするsqlを作成
+    $sql="update RoomList set is_join=0 where room_name=$room";
+
+    //sqlに適応
+    add_DB($sql);
+}
