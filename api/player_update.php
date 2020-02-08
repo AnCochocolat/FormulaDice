@@ -9,11 +9,17 @@ $last_meter=$_GET['last_meter'];
 
 $attack_count=$_GET['attack_count'];
 
-add_DB('update {$leader_name}_room set meter=:meter,attack_count=:attack_count where name=?',[$name]);
+$leader_id=$_GET['leader_id'];
 
-$param = [
+$room=$leader_id."_room";
+
+$sql="update  set meter=:meter,attack_count=:attack_count where name=?"
+
+add_DB($sql,[$name]);
+
+/* $param = [
     ':meter'=>$last_meter,
     ':attack_count'=>$attack_count
 ];
 
-echo json_encode($param);
+echo json_encode($param); */

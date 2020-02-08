@@ -13,13 +13,13 @@ $last_meter=$_GET['last_meter'];
 //アタックカウント
 $attack_count=$_GET['attack_count'];
 
-//リーダーかどうか
-$leader=$_GET['is_leader'];
+//プレイヤーのid
+$id=$_GET['player_id'];
 
-//リーダーだったら
-if($leader){
 
-}
+
+
+
 
 add_DB('update {$leader_name}_room set meter=:meter,attack_count=:attack_count where name=?',[$name]);
 
