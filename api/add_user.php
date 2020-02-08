@@ -19,8 +19,17 @@ $room = $myid."_room";
 
 if($result)
 {
-    $sql="insert into $result_room(name) values(?)";
+    $sql="insert into $result_room(name) values(?)";    
     add_DB($sql,[$name]);
+
+    $count_sql="select count(*) as max_count from $result_room";
+    $result=get_DB($count_sql);
+    $player_count=$result['max_count'];
+
+    if($player_count==4){
+    $sql="update RoomList set is_join=0 where room_name=?";
+    add_DB($sql,[$result_room]);
+    }
 }
 else
 {
