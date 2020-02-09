@@ -153,11 +153,6 @@ width: 250px;
 
         //get player id & room_name
         var query=location.search.split(/[=&]/);
-            fetch("/FormulaDice/api/start_room.php?room_name="+query[5])
-            .then(()=>{
-                location.href='race.html?id='+encodeURIComponent(query[1])
-                    +'&room_name='+encodeURIComponent(query[5]);
-            });
 
         // get number_of_people
         fetch("/FormulaDice/api/room_count.php?room_name="+query[3]) 
