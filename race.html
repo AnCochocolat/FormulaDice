@@ -160,7 +160,7 @@ width: 250px;
             });
 
         // get number_of_people
-        fetch("/FormulaDice/api/room_count.php") 
+        fetch("/FormulaDice/api/room_count.php?room_name="+query[3]) 
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
 number_of_people = json["count"];
@@ -401,7 +401,7 @@ let timer = setInterval( () => {
   counter++;
   ctest.innerHTML = counter;
   frame_update = true;
-  fetch("/FormulaDice/api/room_count.php") 
+  fetch("/FormulaDice/api/room_count.php?room_name="+query[3]) 
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
 if(load_player_count != json["player_count"] && counter > 5){
