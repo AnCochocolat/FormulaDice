@@ -22,12 +22,27 @@ $attack_count=$_GET['attack_mode_count'];
 //ルー厶名変数
 $room=$lid."_room";
 
-//テーブルの値を更新するsqlを作成
-$update_sql="update $room set _c_mileage=$c_mileage,
+$goal_check=false;
+
+//残り距離が0以下になったかどうか
+if($remain_distance<=0){
+    //テーブルの値を更新するsqlを作成
+    $update_sql="update $room set _c_mileage=$c_mileage,
+            _distance=$remain_distance,
+            _e_mileage=$e_mileage,
+            _attack_count=$attack_count,
+            _is_goal=1 where _myid=$myid";
+    
+    $goal_check=true;
+}
+else
+{
+    //テーブルの値を更新するsqlを作成
+    $update_sql="update $room set _c_mileage=$c_mileage,
             _distance=$remain_distance,
             _e_mileage=$e_mileage,
             _attack_count=$attack_count where _myid=$myid";
-
+}
 //sql適応
 add_DB($update_sql);
 
@@ -51,7 +66,8 @@ $param=[
     'mileage'=>$result_c_mileage,
     'distance'=>$result_distance,
     'e_mileage'=>$result_e_mileage,
-    'attack_count'=>$result_attack_count
+    'attack_count'=>$result_attack_count,
+    'is_goal'=>$goal_check
 ];
 
 echo json_encode($param);
