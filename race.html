@@ -167,13 +167,13 @@ width: 250px;
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
 number_of_people = json["count"];
+player_count = json["player_count"];
     });
     //set players status
         for(let i = 0;i < number_of_people;i++){
             fetch("/FormulaDice/api/room_get.php?num_count="+i+"&room_name="+query[3]) 
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
-    player_count = json["player_count"];
         players_mileage[i] = json["mileage"];
         event_mileage[i] = json["e_mileage"];
         players_attack_mode_count[i] = json["attack_count"];
@@ -226,8 +226,8 @@ if(players_mileage[player_count] >= max_distance){
         document.getElementById("roll-dice").disabled = "disabled";
         document.getElementById("attack-mode").disabled = "disabled";
         is_goal = true;
+        TurnUpdate();
         //goal  go to result 
-Goal();
         e.preventDefault();
         return;       
 }
@@ -399,8 +399,14 @@ let timer = setInterval( () => {
   counter++;
   ctest.innerHTML = counter;
   frame_update = true;
-
-  //window.location.reload(false);
+  fetch("/FormulaDice/api/room_count.php") 
+    .then( (res)=>{ return res.json(); }) 
+    .then( (json)=>{ // ここに受信時の処理 
+if(load_player_count != json[player_count]){
+window.location.reload(false);
+}
+    });
+  
   // ここに繰り返したい処理を書く
   //console.log("Hello");
 
