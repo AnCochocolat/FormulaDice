@@ -132,7 +132,7 @@ width: 250px;
     <p id="ctest"></p>
     <script>
         const max_distance = 110;
-        let number_of_people = 4;//プレイヤーの数
+        let number_of_people = 0;//プレイヤーの数
         let player_count = 0;
         let load_player_count = 0;
         let players_mileage = [0,0,0,0];//移動距離
@@ -148,8 +148,10 @@ width: 250px;
         let attack_mode_use = [0,0,0,0];    
         let is_slow = false;
         let my_player_id = 0;
+        let is_goal = false;
         let players = document.querySelectorAll(".player");
-        document.querySelector("#player_name").innerHTML = "player" + (player_count + 1) + " :";
+
+        //get player id & room_name
         var query=location.search.split(/[=&]/);
         if(query[3]=='true') document.querySelector("#btn-next").hidden=false;
 
@@ -160,23 +162,36 @@ width: 250px;
                     +'&room_name='+encodeURIComponent(room_name);
             });
         });
-
-        
-         fetch("/FormulaDice/api/room_get.php") 
+        // get number_of_people
+        fetch("/FormulaDice/api/room_count.php") 
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
-    for(let i = 0; i < number_of_people;i++){
+number_of_people = json["count"];
+    });
+    //set players status
+        for(let i = 0;i < number_of_people;i++){
+            fetch("/FormulaDice/api/room_get.php?num_count="+i+"&room_name="+query[3]) 
+    .then( (res)=>{ return res.json(); }) 
+    .then( (json)=>{ // ここに受信時の処理 
+    player_count = json["player_count"];
         players_mileage[i] = json["mileage"];
         event_mileage[i] = json["e_mileage"];
         players_attack_mode_count[i] = json["attack_count"];
         players[i].querySelector("#current-mileage").innerHTML = players_mileage[i];
         players[i].querySelector("#remain-distance").innerHTML = max_distance - json;
         players[i].querySelector("#event-mileage").innerHTML = event_start_mileage;
-    }
     //document.querySelector("#text-question").innerHTML = json["text"];
     //document.querySelector("#qid").value = json["qid"];
     });
+        }
+
     load_player_count = player_count;
+    //check player turn if  is you not your turn disabled buttons
+if(query[1] != player_count){
+    document.getElementById("roll-dice").disabled = "disabled";
+        document.getElementById("attack-mode").disabled = "disabled";
+}
+document.querySelector("#player_name").innerHTML = "player" + (player_count + 1) + " :";
     //サイコロを振ったときの処理
     document.querySelector("#roll-dice").addEventListener("click",(e)=>{
         if(players_attack_mode_count[player_count] > 0){
@@ -204,12 +219,13 @@ document.querySelector("#dice-number").innerHTML =dice_result;
 players[player_count].querySelector("#current-mileage").innerHTML = players_mileage[player_count];
 players[player_count].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[player_count];
 players[player_count].querySelector("#event-mileage").innerHTML = event_mileage[player_count];
-//最大距離を越えたらゴール　0以下の距離にはならない
+//最大距離を越えたらゴール 0以下の距離にはならない
 if(players_mileage[player_count] >= max_distance){
     players[player_count].querySelector("#current-mileage").innerHTML = max_distance;
         players[player_count].querySelector("#remain-distance").innerHTML = "GOAL!"; 
         document.getElementById("roll-dice").disabled = "disabled";
         document.getElementById("attack-mode").disabled = "disabled";
+        is_goal = true;
         //goal  go to result 
 Goal();
         e.preventDefault();
@@ -240,8 +256,9 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
 
     //プレイヤーのターンを更新
     function TurnUpdate(){
+        //increase player count
     player_count++;
-
+//return player count
     if(player_count >= number_of_people){
         player_count = 0;
     }
@@ -249,8 +266,22 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
     let counter01 = 0;
     let timer01 = setInterval(() => {
         counter01++;
+        //after 1 seconds set players status in database
         if(counter01 > 1){
-            document.getElementById("roll-dice").disabled = "";
+            for(let i = 0;i < number_of_people;i++){
+            fetch("/FormulaDice/api/room_update.php?id="+i+
+            "&current_mileage="+players_mileage[i]+
+            "&distance="+(max_distance - players_mileage[i])+
+            "&event_mileage="+event_mileage[i]+
+            "&attack_mode_count="+attack_mode_count[i]+
+            "&room_name="+query[3]+
+            "&player_count="+player_count+
+            "&is_goal="+is_goal) 
+    .then( (res)=>{ return res.json(); }) 
+    .then( (json)=>{ // ここに受信時の処理 
+    });
+            }
+            /*document.getElementById("roll-dice").disabled = "";
             document.querySelector("#player_name").innerHTML = "player" + (player_count + 1) + " :"
             document.querySelector("#dice-number").innerHTML = "";
             if(attack_mode_use[player_count] == 1){
@@ -258,7 +289,7 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
             }
             else{
                 document.getElementById("attack-mode").disabled = "";
-            }
+            }*/
             clearInterval(timer01);
         }
     }, 1000);
@@ -333,6 +364,7 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
         players_mileage[player_count] += num;
             event_mileage[player_count] -= num;
     }
+    //compare
     function compareFunc(a, b) {
   return b - a;
 }
@@ -367,13 +399,7 @@ let timer = setInterval( () => {
   counter++;
   ctest.innerHTML = counter;
   frame_update = true;
- /* fetch("/Quiz/api/question.php") 
-    .then( (res)=>{ return res.json(); }) 
-    .then( (json)=>{ // ここに受信時の処理 
-    document.querySelector("#text-question").innerHTML = json["text"];
-    document.querySelector("#qid").value = json["qid"];
-    });
-    */
+
   //window.location.reload(false);
   // ここに繰り返したい処理を書く
   //console.log("Hello");
@@ -385,6 +411,13 @@ let timer = setInterval( () => {
 }, 1000);  // 間隔はミリ秒で指定
 
 //timer methods
+ /* fetch("/Quiz/api/question.php") 
+    .then( (res)=>{ return res.json(); }) 
+    .then( (json)=>{ // ここに受信時の処理 
+    document.querySelector("#text-question").innerHTML = json["text"];
+    document.querySelector("#qid").value = json["qid"];
+    });
+    */
     </script>
 </body>
 </html>
