@@ -6,5 +6,8 @@ require_once('common.php');
     //is_joinを0にするsqlを作成
     $sql="update RoomList set is_join=0 where room_name=$room";
 
+    //is_startを1にするsql作成
+    $sql="update RoomList set is_start=1 where room_name=$room";
+
     //sqlに適応
     add_DB($sql);
