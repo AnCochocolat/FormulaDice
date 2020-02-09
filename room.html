@@ -50,9 +50,7 @@
                 return res.json();
             })
             .then((json)=>{
-                console.log( json["is_start_number"] );
-                let is_start=json["is_start"];
-                if(is_start=='true')
+                if(json["is_start_number"]==1)
                 location.href='race.html?id='+encodeURIComponent(query[1])
                     +'&room_name='+encodeURIComponent(query[5]);
                 let count=json["player_count"];
