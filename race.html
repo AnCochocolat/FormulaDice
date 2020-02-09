@@ -401,11 +401,10 @@ let timer = setInterval( () => {
   counter++;
   ctest.innerHTML = counter;
   frame_update = true;
-  y
   fetch("/FormulaDice/api/room_count.php") 
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
-if(load_player_count != json[player_count]){
+if(load_player_count != json["player_count"]){
 window.location.reload(false);
 }
     });
