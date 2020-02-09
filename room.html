@@ -5,11 +5,10 @@
     <title>Formula Dice</title>
     <style>
         body{
-            /*background-image: url(asset/background/fantasy_001.jpg);*/
             background-size: cover;
             background-repeat: no-repeat;
             text-align: center;
-            padding-top:50px; 
+            padding-top:50px;
         }
         #btn-next{
             width: 120px;
@@ -20,13 +19,37 @@
             color: blue;
             background-color: rgba(255, 255, 255,0.5);
         }
+        form{
+            padding: 30px;
+        }
     </style>
 </head>
 <body>
-    <h1 id="title"> Room</h1>
-
+    <h1 id="title">Room</h1>
+    <div id="table"></div>
     <form action="race.html">
-        <button id="btn-next">START</button>
+        <button id="btn-next" hidden>START</button>
     </form>
+
+    <script>
+        var query=location.search.split(/[=&]/);
+        if(query[3]) document.querySelector("#btn-next").hidden=false;
+        function update(){
+            fetch("/FormulaDice/api/room_user.php?room_name="+query[5])
+            .then((res)=>{
+                return res.json();
+            })
+            .then((json)=>{
+                let count=json["player_count"];
+                let tr="";
+                for(var i=0;i<count;i++){
+                    tr+="<tr><td>"+json['name'+i]+"</td></tr>";
+                }
+                let table=document.querySelector("#table");
+                table.innerHTML='<table border="2" align="center" cellpadding="10">'+tr+'</table>';
+            });
+        }
+        setInterval('update()',1000);
+    </script>
 </body>
 </html>
