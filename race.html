@@ -159,7 +159,7 @@ width: 250px;
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
 number_of_people = json["count"];
-player_count = json["player_count"];
+player_count = json['player_count'];
 load_player_count = player_count;
     });
     //set players status
@@ -400,9 +400,10 @@ let timer = setInterval( () => {
   fetch("/FormulaDice/api/room_count.php?room_name="+query[3]) 
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
-    alert(load_player_count + " " + json["player_count"]);
-if(load_player_count != json["player_count"]){
-//window.location.reload(false);
+    alert(load_player_count + " " + json['player_count']);
+if(load_player_count != json['player_count']){
+    alert("wrong number");
+window.location.reload(false);
 }
     });
   
