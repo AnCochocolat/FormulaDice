@@ -7,15 +7,6 @@ $num_count=$_GET['num_count'];
 //ルーム名取得
 $room=$_GET['room_name'];
 
-//部屋人数をカウント
-$count_sql="select count(*) as max_count from $room";
-
-//sqlから部屋人数取得
-$result=get_DB($count_sql);
-
-//部屋人数を変数に保持
-$count=$result['max_count'];
-
 //現在のプレイヤー番号を取得
 $sql="select player_number from RoomList where room_name=$room";
 
@@ -39,14 +30,13 @@ $player_data=array(array());
     $result_distance=$result_sql['is_distance'];
     $result_e_mileage=$result_sql['is_emileage'];
     $result_attack_count=$result_sql['is_attackcount'];
-    
+
 //パラメータを返す
 $param=[
     'mileage'=>$result_c_mileage,
     'distance'=>$result_distance,
     'e_mileage'=>$result_e_mileage,
     'attack_count'=>$result_attack_count,
-    'count'=>$count,
     'player_count'=>$player_number
 ]; 
 
