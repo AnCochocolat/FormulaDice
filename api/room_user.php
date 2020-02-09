@@ -22,14 +22,6 @@ $result=get_DB($start_sql);
 //スタートナンバーを変数に
 $start_number=(int)$result['start_c'];
 
-/* //スタートフラグ
-$start_check=false;
-
-//スタートナンバーが1だったらゲーム開始
-if($start_number==1){
-    $start_check=true;
-} */
-
 //プレイヤーデータ
 $player_data=array();
 

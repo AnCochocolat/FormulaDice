@@ -27,11 +27,11 @@ $player_data=array(array());
     $result_sql=get_DB($sql,[$num_count+1]);
 
     //テーブルから取得してきた値
-    $result_c_mileage=$result_sql['is_mileage'];
-    $result_distance=$result_sql['is_distance'];
-    $result_e_mileage=$result_sql['is_emileage'];
-    $result_attackuse_count=$result_sql['is_attack_usecount'];
-    $result_attackmode_count=$result_sql['is_attackcount'];
+    $result_c_mileage=(int)$result_sql['is_mileage'];
+    $result_distance=(int)$result_sql['is_distance'];
+    $result_e_mileage=(int)$result_sql['is_emileage'];
+    $result_attackuse_count=(int)$result_sql['is_attack_usecount'];
+    $result_attackmode_count=(int)$result_sql['is_attackcount'];
 
 //パラメータを返す
 $param=[

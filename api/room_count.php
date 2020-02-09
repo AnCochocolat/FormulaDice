@@ -11,13 +11,17 @@ $count_sql="select count(*) as max_count from $room";
 $result=get_DB($count_sql);
 
 //部屋人数を変数に保持
-$count=$result['max_count'];
+$count=(int)$result['max_count'];
 
 //現在のプレイヤー番号を取得
-$sql="select player_number from RoomList where room_name='$room'";
+$sql="select player_number as number from RoomList where room_name='$room'";
 
 //プレイヤー番号
-$player_number=get_DB($sql);
+$result=get_DB($sql);
+
+//番号
+$player_number=(int)$result['number'];
+
 
 $param=[
     'count'=>$count,
