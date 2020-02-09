@@ -33,9 +33,7 @@
 
     <script>
         var query=location.search.split(/[=&]/);
-        console.log(query[3]);
-        console.log(query[5]);
-        if(query[3]) document.querySelector("#btn-next").hidden=false;
+        if(query[3]=='true') document.querySelector("#btn-next").hidden=false;
         function update(){
             fetch("/FormulaDice/api/room_user.php?room_name="+query[5])
             .then((res)=>{
