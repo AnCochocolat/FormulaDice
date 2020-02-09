@@ -38,8 +38,8 @@
         document.querySelector("#btn-next").addEventListener("click",(e)=>{
             fetch("/FormulaDice/api/start_room.php?room_name="+query[5])
             .then(()=>{
-                location.href='race.html?id='+encodeURIComponent(id)
-                    +'&room_name='+encodeURIComponent(room_name);
+                location.href='race.html?id='+encodeURIComponent(query[1])
+                    +'&room_name='+encodeURIComponent(query[5]);
             });
         });
 
@@ -49,6 +49,9 @@
                 return res.json();
             })
             .then((json)=>{
+                if(json["is_start"]=='true')
+                location.href='race.html?id='+encodeURIComponent(query[1])
+                    +'&room_name='+encodeURIComponent(query[5]);
                 let count=json["player_count"];
                 let tr="";
                 for(var i=0;i<count;i++){
@@ -59,7 +62,7 @@
                 table.innerHTML='<table border="2" align="center" cellpadding="10">'+tr+'</table>';
             });
         }
-        setInterval('update()',2000);
+        setInterval('update()',1000);
     </script>
 </body>
 </html>
