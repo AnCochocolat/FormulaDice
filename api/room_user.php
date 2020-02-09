@@ -14,13 +14,13 @@ $result=get_DB($count_sql);
 $player_count=$result['max_count'];
 
 //部屋がスタートされたかどうか
-$start_sql="select is_start as start_check from RoomList where room_name=$room";
+$start_sql="select is_start as start_check from RoomList where room_name='$room'";
 
 //スタートナンバー取得
 $result=get_DB($start_sql);
 
 //スタートナンバーを変数に
-$start_number=$result['start_check'];
+$start_number=(int)$result['start_check'];
 
 //スタートフラグ
 $start_check=false;

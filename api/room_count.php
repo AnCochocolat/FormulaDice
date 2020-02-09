@@ -14,7 +14,7 @@ $result=get_DB($count_sql);
 $count=$result['max_count'];
 
 //現在のプレイヤー番号を取得
-$sql="select player_number from RoomList where room_name=$room";
+$sql="select player_number from RoomList where room_name='$room'";
 
 //プレイヤー番号
 $player_number=get_DB($sql);

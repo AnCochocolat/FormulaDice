@@ -8,7 +8,7 @@ $num_count=$_GET['num_count'];
 $room=$_GET['room_name'];
 
 //現在のプレイヤー番号を取得
-$sql="select player_number from RoomList where room_name=$room";
+$sql="select player_number from RoomList where room_name='$room'";
 
 //プレイヤー番号
 $player_number=get_DB($sql);
