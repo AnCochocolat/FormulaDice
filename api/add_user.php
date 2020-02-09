@@ -70,7 +70,7 @@ else
         _c_mileage int default 0,
         _distance int default 110,
         _e_mileage int default 20,
-        _attack_count int default 5,
+        _attack_use_mode int default 1,
         _is_goal int default 0,
         _myid int default 0,
         PRIMARY KEY(id)
