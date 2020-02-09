@@ -149,7 +149,19 @@ width: 250px;
         let is_slow = false;
         let my_player_id = 0;
         let players = document.querySelectorAll(".player");
-        document.querySelector("#player_name").innerHTML = "player" + (player_count + 1) + " :"
+        document.querySelector("#player_name").innerHTML = "player" + (player_count + 1) + " :";
+        var query=location.search.split(/[=&]/);
+        if(query[3]=='true') document.querySelector("#btn-next").hidden=false;
+
+        document.querySelector("#btn-next").addEventListener("click",(e)=>{
+            fetch("/FormulaDice/api/start_room.php?room_name="+query[5])
+            .then(()=>{
+                location.href='race.html?id='+encodeURIComponent(id)
+                    +'&room_name='+encodeURIComponent(room_name);
+            });
+        });
+
+        
          fetch("/FormulaDice/api/room_update.php") 
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
