@@ -26,7 +26,7 @@ $room=$_GET['room_name'];
 $p_count=$_GET['player_count'];
 
 //現在のプレイヤー番号を取得
-$sql="update RoomList set player_number=$p_count where room_name=$room";
+$sql="update RoomList set player_number=$p_count where room_name='$room'";
 
 //テーブル適応
 add_DB($sql);
