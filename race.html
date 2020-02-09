@@ -166,7 +166,7 @@ width: 250px;
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
 number_of_people = json["count"];
-player_count = json["player_count"] ;
+player_count = json["player_count"];
     });
     //set players status
         for(let i = 0;i < number_of_people;i++){
@@ -187,7 +187,7 @@ player_count = json["player_count"] ;
 
     load_player_count = player_count;
     //check player turn if  is you not your turn disabled buttons
-if(query[1] != player_count){
+if(query[1] != player_count + 1){
     document.getElementById("roll-dice").disabled = "disabled";
         document.getElementById("attack-mode").disabled = "disabled";
 }
@@ -262,7 +262,7 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
         //increase player count
     player_count++;
 //return player count
-    if(player_count > number_of_people){
+    if(player_count => number_of_people){
         player_count = 0;
     }
     document.getElementById("roll-dice").disabled = "disabled";
