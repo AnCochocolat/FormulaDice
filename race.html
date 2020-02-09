@@ -161,7 +161,6 @@ width: 250px;
 number_of_people = json["count"];
 player_count = json["player_count"];
 load_player_count = player_count;
-alert(json["count"] + " " + json["player_count"]);
     });
     //set players status
         for(let i = 0;i < number_of_people;i++){
@@ -170,7 +169,7 @@ alert(json["count"] + " " + json["player_count"]);
     .then( (json)=>{ // ここに受信時の処理 
         players_mileage[i] = json["mileage"];
         event_mileage[i] = json["e_mileage"];
-        players_attack_mode_count[i] = json["attack_count"];
+        players_attack_mode_count[i] = json["attack_mode_count"];
         attack_mode_use[i] = json["attack_use_count"];
         alert(i + " " +  json["e_mileage"]);
         players[i].querySelector("#current-mileage").innerHTML = players_mileage[i];
