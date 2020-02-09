@@ -1,11 +1,11 @@
 <?php
 require_once('common.php');
 
-//リーダーのid
-$lid=$_GET['leader_id'];
+//ルーム名取得
+$room=$_GET['room_name'];
 
-//ルー厶名変数
-$room=$lid."_room";
+//現在のプレイヤー取得
+$player_=$_GET['player_count'];
 
 //部屋人数をカウント
 $count_sql="select count(*) as max_count from $room";
@@ -14,9 +14,13 @@ $count_sql="select count(*) as max_count from $room";
 $result=get_DB($count_sql);
 
 //部屋人数を変数に保持
-$player_count=$result['max_count'];
+$count=$result['max_count'];
+
+//現在のプレイヤー番号をテーブルに適応するsql作成
+$player_count_sql="update $room set _player_count=$player_";
 
 //返す値
 $param=[
-    'player_count'=>$player_count
+    'count'=>$count,
+    'player_count'=>$player_
 ];

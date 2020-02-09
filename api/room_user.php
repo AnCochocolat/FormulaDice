@@ -1,11 +1,8 @@
 <?php
 require_once('common.php');
 
-//リーダーid取得
-$lid=$_GET['leader_id'];
-
-//ルーム名
-$room=$lid."_room";
+//ルーム名取得
+$room=$_GET['room_name'];
 
 //部屋人数取得
 $count_sql="select count(*) as max_count from $room";

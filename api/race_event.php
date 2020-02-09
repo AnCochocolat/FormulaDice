@@ -1,6 +1,5 @@
 <?php
 require_once('common.php');
 
-//リーダーのid
-$lid=$_GET['leader_id'];
-
+//ルーム名取得
+$room=$_GET['room_name'];
