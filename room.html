@@ -41,16 +41,17 @@
             })
             .then((json)=>{
                 let count=json["player_count"];
+                console.log(count);
                 let tr="";
-                for(var i=0;i<count;i++){
-                    let name='name'+i;
-                    tr+="<tr><td>"+json[name]+"</td></tr>";
-                }
-                let table=document.querySelector("#table");
-                table.innerHTML='<table border="2" align="center" cellpadding="10">'+tr+'</table>';
+                // for(var i=0;i<count;i++){
+                //     let name='name'+i;
+                //     tr+="<tr><td>"+json[name]+"</td></tr>";
+                // }
+                // let table=document.querySelector("#table");
+                // table.innerHTML='<table border="2" align="center" cellpadding="10">'+tr+'</table>';
             });
         }
-        setInterval('update()',1000);
+        setInterval('update()',2000);
     </script>
 </body>
 </html>
