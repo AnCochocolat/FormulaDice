@@ -43,7 +43,7 @@
                 let count=json["player_count"];
                 let tr="";
                 for(var i=0;i<count;i++){
-                    tr+="<tr><td>"+json["i"]+"</td></tr>";
+                    tr+="<tr><td>"+json[i]+"</td></tr>";
                 }
                 let table=document.querySelector("#table");
                 table.innerHTML='<table border="2" align="center" cellpadding="10">'+tr+'</table>';
