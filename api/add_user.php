@@ -101,7 +101,8 @@ else
 //jsonでデータを返す用
 $param = [
     'id' => $myid,
-    'is_leader' => $leader
+    'is_leader' => $leader,
+    'room_name'=>$result_room
 ];
 
 //jsonでデータを返す
