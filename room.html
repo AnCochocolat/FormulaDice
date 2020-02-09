@@ -36,6 +36,7 @@
         if(query[3]=='true') document.querySelector("#btn-next").hidden=false;
 
         document.querySelector("#btn-next").addEventListener("click",(e)=>{
+            document.querySelector("#btn-next").disabled = true;
             fetch("/FormulaDice/api/start_room.php?room_name="+query[5])
             .then(()=>{
                 location.href='race.html?id='+encodeURIComponent(query[1])
@@ -49,6 +50,7 @@
                 return res.json();
             })
             .then((json)=>{
+                console.log( json["is_start"] );
                 if(json["is_start"]=='true')
                 location.href='race.html?id='+encodeURIComponent(query[1])
                     +'&room_name='+encodeURIComponent(query[5]);
