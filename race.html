@@ -212,6 +212,7 @@ document.querySelector("#player_name").innerHTML = "player" + (player_count + 1)
         let windownum = dice_result
         if(dice_result <= 0)dice_result = "miss!";
 document.querySelector("#dice-number").innerHTML =dice_result;
+//error
 players[player_count].querySelector("#current-mileage").innerHTML = players_mileage[player_count];
 players[player_count].querySelector("#remain-distance").innerHTML = max_distance - players_mileage[player_count];
 players[player_count].querySelector("#event-mileage").innerHTML = event_mileage[player_count];
@@ -399,8 +400,9 @@ let timer = setInterval( () => {
   fetch("/FormulaDice/api/room_count.php?room_name="+query[3]) 
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
-if(load_player_count != json["player_count"] && counter > 5){
-window.location.reload(false);
+    alert(load_player_count + " " + json["player_count"]);
+if(load_player_count != json["player_count"]){
+//window.location.reload(false);
 }
     });
   
