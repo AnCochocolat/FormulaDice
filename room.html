@@ -40,6 +40,9 @@
                 return res.json();
             })
             .then((json)=>{
+                json.forEach(function( value ) {
+                    console.log( value );
+                });
                 let count=json["player_count"];
                 let tr="";
                 for(var i=0;i<count;i++){
