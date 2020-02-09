@@ -33,6 +33,8 @@
 
     <script>
         var query=location.search.split(/[=&]/);
+        console.log(query[3]);
+        console.log(query[5]);
         if(query[3]) document.querySelector("#btn-next").hidden=false;
         function update(){
             fetch("/FormulaDice/api/room_user.php?room_name="+query[5])
@@ -40,13 +42,11 @@
                 return res.json();
             })
             .then((json)=>{
-                json.forEach(function( value ) {
-                    console.log( value );
-                });
                 let count=json["player_count"];
                 let tr="";
                 for(var i=0;i<count;i++){
-                    tr+="<tr><td>"+json[i]+"</td></tr>";
+                    let name='name'+i;
+                    tr+="<tr><td>"+json[name]+"</td></tr>";
                 }
                 let table=document.querySelector("#table");
                 table.innerHTML='<table border="2" align="center" cellpadding="10">'+tr+'</table>';
