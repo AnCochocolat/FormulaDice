@@ -13,19 +13,19 @@ $result=get_DB($count_sql);
 //部屋の人数を変数に保持
 $player_count=$result['max_count'];
 
-//sql作成
-$sql="select name from $room";
-
-//データ取得
-$data=get_DB($sql);
-
 //プレイヤーデータ
 $player_data=array();
 
 //人数分回す
 for($i=0;$i<$player_count;$i++)
 {
-    $player_data[$i]=$data[$i][name];
+    //sql作成
+    $sql="select name as player_name from $room where id=?";
+
+    //データ取得
+    $data=get_DB($sql,[$i+1]);
+
+    $player_data[$i]=$data['player_name'];
 }
 
 switch($player_count){
@@ -33,35 +33,39 @@ switch($player_count){
     case 1:
     $param=[
         'player_count'=>1,
-        '0'=>$player_data[0]
+        'name0'=>$player_data[0]
     ];
     break;
 
     case 2:
     $param=[
         'player_count'=>2,
-        '0'=>$player_data[0],
-        '1'=>$player_data[1]
+        'name0'=>$player_data[0],
+        'name1'=>$player_data[1]
     ];
     break;
 
     case 3:
     $param=[
         'player_count'=>3,
-        '0'=>$player_data[0],
-        '1'=>$player_data[1],
-        '2'=>$player_data[2],
+        'name0'=>$player_data[0],
+        'name1'=>$player_data[1],
+        'name2'=>$player_data[2],
     ];
+
     break;
 
     case 4:
     $param=[
         'player_count'=>4,
-        '0'=>$player_data[0],
-        '1'=>$player_data[1],
-        '2'=>$player_data[2],
-        '3'=>$player_data[3],
+        'name0'=>$player_data[0],
+        'name1'=>$player_data[1],
+        'name2'=>$player_data[2],
+        'name3'=>$player_data[3],
     ];
     break;
 
 }
+
+//jsonでデータを返す
+echo json_encode($param);

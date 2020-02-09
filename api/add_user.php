@@ -73,7 +73,6 @@ else
         _attack_count int default 5,
         _is_goal int default 0,
         _myid int default 0,
-        _player_count int default 0,
         PRIMARY KEY(id)
         )";
 
