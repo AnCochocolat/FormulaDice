@@ -145,7 +145,7 @@ width: 250px;
         let normal_dice = [0,1,2,4,5,8,10];
         let attack_dice = [0,5,8,10,12,14,20];
         let slow_dice = [0,1,1,2,2,3,3];
-        let attack_mode_use = [0,0,0,0];    
+        let attack_mode_use = [1,1,1,1];    
         let is_slow = false;
         let my_player_id = 0;
         let is_goal = false;
@@ -177,6 +177,7 @@ player_count = json["player_count"];
         players_mileage[i] = json["mileage"];
         event_mileage[i] = json["e_mileage"];
         players_attack_mode_count[i] = json["attack_count"];
+        attack_mode_use[i] = json["attack_use_count"];
         players[i].querySelector("#current-mileage").innerHTML = players_mileage[i];
         players[i].querySelector("#remain-distance").innerHTML = max_distance - json;
         players[i].querySelector("#event-mileage").innerHTML = event_start_mileage;
@@ -190,6 +191,9 @@ player_count = json["player_count"];
 if(query[1] != player_count){
     document.getElementById("roll-dice").disabled = "disabled";
         document.getElementById("attack-mode").disabled = "disabled";
+}
+else if(attack_mode_use[player_count] == 0){
+    document.getElementById("attack-mode").disabled = "disabled";
 }
 document.querySelector("#player_name").innerHTML = "player" + (player_count + 1) + " :";
     //サイコロを振ったときの処理
@@ -250,7 +254,7 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
     players_attack_mode_count[player_count] = attack_mode_count;
    players[player_count].querySelector("#attack-mode-remain").innerHTML = players_attack_mode_count[player_count];
    document.getElementById("attack-mode").disabled = "disabled";
-   attack_mode_use[player_count] = 1;
+   attack_mode_use[player_count] = 0;
     TurnUpdate();
 });
 
@@ -273,6 +277,7 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
             "&current_mileage="+players_mileage[i]+
             "&distance="+(max_distance - players_mileage[i])+
             "&event_mileage="+event_mileage[i]+
+            "&attack_use_count="+attack_mode_use[i]+
             "&attack_mode_count="+attack_mode_count[i]+
             "&room_name="+query[3]+
             "&player_count="+player_count+
