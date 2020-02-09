@@ -50,6 +50,7 @@
                 return res.json();
             })
             .then((json)=>{
+                console.log( json["is_start_number"] );
                 let is_start=json["is_start"];
                 if(is_start=='true')
                 location.href='race.html?id='+encodeURIComponent(query[1])
