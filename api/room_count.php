@@ -1,6 +1,9 @@
 <?php
 require_once('common.php');
 
+//ルーム名取得
+$room=$_GET['room_name'];
+
 //部屋人数をカウント
 $count_sql="select count(*) as max_count from $room";
 
