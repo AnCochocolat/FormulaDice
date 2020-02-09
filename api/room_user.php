@@ -35,31 +35,35 @@ switch($player_count){
 
     case 1:
     $param=[
-        'name1'=>$player_data[0]
+        'player_count'=>1,
+        'name0'=>$player_data[0]
     ];
     break;
 
     case 2:
     $param=[
-        'name1'=>$player_data[0],
-        'name2'=>$player_data[1]
+        'player_count'=>2,
+        'name0'=>$player_data[0],
+        'name1'=>$player_data[1]
     ];
     break;
 
     case 3:
     $param=[
-        'name1'=>$player_data[0],
-        'name2'=>$player_data[1],
-        'name3'=>$player_data[2],
+        'player_count'=>3,
+        'name0'=>$player_data[0],
+        'name1'=>$player_data[1],
+        'name2'=>$player_data[2],
     ];
     break;
 
     case 4:
     $param=[
-        'name1'=>$player_data[0],
-        'name2'=>$player_data[1],
-        'name3'=>$player_data[2],
-        'name4'=>$player_data[3],
+        'player_count'=>4,
+        'name0'=>$player_data[0],
+        'name1'=>$player_data[1],
+        'name2'=>$player_data[2],
+        'name3'=>$player_data[3],
     ];
     break;
 
