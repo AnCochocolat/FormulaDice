@@ -20,7 +20,8 @@ $player_data=array(array());
     $sql="select _c_mileage as is_mileage,
     _distance as is_distance,
     _e_mileage as is_emileage,
-    _attack_use_mode as is_attack_usecount from $room where id=?";
+    _attack_use_mode as is_attack_usecount,
+    _attack_mode_count as is_attackcount from $room where id=?";
 
     //sqlから取得
     $result_sql=get_DB($sql,[$num_count+1]);
@@ -29,14 +30,16 @@ $player_data=array(array());
     $result_c_mileage=$result_sql['is_mileage'];
     $result_distance=$result_sql['is_distance'];
     $result_e_mileage=$result_sql['is_emileage'];
-    $result_attack_count=$result_sql['is_attack_usecount'];
+    $result_attackuse_count=$result_sql['is_attack_usecount'];
+    $result_attackmode_count=$result_sql['is_attackcount'];
 
 //パラメータを返す
 $param=[
     'mileage'=>$result_c_mileage,
     'distance'=>$result_distance,
     'e_mileage'=>$result_e_mileage,
-    'attack_use_count'=>$result_attack_count,
+    'attack_use_count'=>$result_attackuse_count,
+    'attack_mode_count'=>$result_attackmode_count,
     'player_count'=>$player_number
 ]; 
 

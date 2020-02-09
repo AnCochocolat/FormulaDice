@@ -14,7 +14,10 @@ $remain_distance=$_GET['distance'];
 $e_mileage=$_GET['event_mileage'];
 
 //アタックモード回数取得
-$attack_count=$_GET['attack_mode_count'];
+$attack_count=$_GET['attack_use_count'];
+
+//アタックモードの回数
+$attack_mode_count=$_GET['attack_mode_count'];
 
 //ルーム名取得
 $room=$_GET['room_name'];
@@ -39,6 +42,7 @@ if($goal)
     _distance=$remain_distance,
     _e_mileage=$e_mileage,
     _attack_use_mode=$attack_count,
+    _attack_mode_count=$attack_mode_count,
     _is_goal=1 where _myid=$myid";
 }
 else
@@ -47,7 +51,8 @@ else
     $update_sql="update $room set _c_mileage=$c_mileage,
     _distance=$remain_distance,
     _e_mileage=$e_mileage,
-    _attack_use_mode=$attack_count where _myid=$myid";
+    _attack_use_mode=$attack_count,
+    _attack_mode_count=$attack_mode_count where _myid=$myid";
 }
 //sql適応
 add_DB($update_sql);
