@@ -14,13 +14,13 @@ $result=get_DB($count_sql);
 $player_count=$result['max_count'];
 
 //部屋がスタートされたかどうか
-$start_sql="select is_start as start_check from RoomList where room_name='$room'";
+$start_sql="select is_start as start_c from RoomList where room_name='$room'";
 
 //スタートナンバー取得
 $result=get_DB($start_sql);
 
 //スタートナンバーを変数に
-$start_number=(int)$result['start_check'];
+$start_number=(int)$result['start_c'];
 
 //スタートフラグ
 $start_check=false;
@@ -51,7 +51,8 @@ switch($player_count){
     $param=[
         'player_count'=>1,
         'name0'=>$player_data[0],
-        'is_start'=> $start_check
+        'is_start'=> $start_check,
+        'is_start_number'=>$start_number
     ];
     break;
 
@@ -60,7 +61,8 @@ switch($player_count){
         'player_count'=>2,
         'name0'=>$player_data[0],
         'name1'=>$player_data[1],
-        'is_start'=> $start_check
+        'is_start'=> $start_check,
+        'is_start_number'=>$start_number
     ];
     break;
 
@@ -70,7 +72,8 @@ switch($player_count){
         'name0'=>$player_data[0],
         'name1'=>$player_data[1],
         'name2'=>$player_data[2],
-        'is_start'=> $start_check
+        'is_start'=> $start_check,
+        'is_start_number'=>$start_number
     ];
 
     break;
@@ -82,7 +85,8 @@ switch($player_count){
         'name1'=>$player_data[1],
         'name2'=>$player_data[2],
         'name3'=>$player_data[3],
-        'is_start'=> $start_check
+        'is_start'=> $start_check,
+        'is_start_number'=>$start_number
     ];
     break;
 
