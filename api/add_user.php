@@ -22,6 +22,9 @@ $result_room=$join_result['room_Name'];
 //リーダーかどうか
 $leader=false;
 
+//部屋名
+$room;
+
 //参加可能な部屋があるかどうか
 if($join_result)
 {
@@ -53,11 +56,12 @@ if($join_result)
         //sqlに適応
         add_DB($sql,[$result_room]);
     }
+    $room=$result_room;
 }
 else
 {
-    //部屋名
-    $room = $myid."_room";
+
+    $room= $myid."_room";
 
     //部屋のテーブル作成
     $sql="create table $room(
@@ -67,8 +71,9 @@ else
         _distance int default 110,
         _e_mileage int default 20,
         _attack_count int default 5,
-        _is_goal int defalut 0,
+        _is_goal int default 0,
         _myid int default 0,
+        _player_count int default 0,
         PRIMARY KEY(id)
         )";
 
@@ -100,7 +105,8 @@ else
 //jsonでデータを返す用
 $param = [
     'id' => $myid,
-    'is_leader' => $leader
+    'is_leader' => $leader,
+    'room_name'=>$room
 ];
 
 //jsonでデータを返す
