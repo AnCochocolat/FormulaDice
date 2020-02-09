@@ -1,31 +1,73 @@
 <?php
 require_once('common.php');
 
-//リーダーの名前
-$leader_name=$_GET['leader_name'];
+//リーダーのid
+$lid=$_GET['leader_id'];
 
-//自身の名前
-$name=$_GET['name'];
+//自身のid
+$myid=$_GET['id'];
 
-//ゴールまでの距離
-$last_meter=$_GET['last_meter'];
+//走行距離取得
+$c_mileage=$_GET['current_mileage'];
 
-//アタックカウント
-$attack_count=$_GET['attack_count'];
+//残りの距離取得
+$remain_distance=$_GET['distance'];
 
-//リーダーかどうか
-$leader=$_GET['is_leader'];
+//イベント発生まで取得
+$e_mileage=$_GET['event_mileage'];
 
-//リーダーだったら
-if($leader){
+//アタックモード回数取得
+$attack_count=$_GET['attack_mode_count'];
 
+//ルー厶名変数
+$room=$lid."_room";
+
+$goal_check=false;
+
+//残り距離が0以下になったかどうか
+if($remain_distance<=0){
+    //テーブルの値を更新するsqlを作成
+    $update_sql="update $room set _c_mileage=$c_mileage,
+            _distance=$remain_distance,
+            _e_mileage=$e_mileage,
+            _attack_count=$attack_count,
+            _is_goal=1 where _myid=$myid";
+    
+    $goal_check=true;
 }
+else
+{
+    //テーブルの値を更新するsqlを作成
+    $update_sql="update $room set _c_mileage=$c_mileage,
+            _distance=$remain_distance,
+            _e_mileage=$e_mileage,
+            _attack_count=$attack_count where _myid=$myid";
+}
+//sql適応
+add_DB($update_sql);
 
-add_DB('update {$leader_name}_room set meter=:meter,attack_count=:attack_count where name=?',[$name]);
+//テーブルから値を取得する
+$sql="select _c_mileage as is_mileage,
+    _distance as is_distance,
+    _e_mileage as is_emileage,
+    _attack_count as is_attackcount from $room where _myid=$myid";
 
-$param = [
-    ':meter'=>$last_meter,
-    ':attack_count'=>$attack_count
+//sqlから取得
+$result_sql=get_DB($sql);
+
+//テーブルから取得してきた値
+$result_c_mileage=$result_sql['is_mileage'];
+$result_distance=$result_sql['is_distance'];
+$result_e_mileage=$result_sql['is_emileage'];
+$result_attack_count=$result_sql['is_attackcount'];
+
+//パラメータを返す
+$param=[
+    'mileage'=>$result_c_mileage,
+    'distance'=>$result_distance,
+    'e_mileage'=>$result_e_mileage,
+    'attack_count'=>$result_attack_count,
+    'is_goal'=>$goal_check
 ];
 
 echo json_encode($param);
