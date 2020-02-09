@@ -275,7 +275,6 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
             "&room_name="+query[3]+
             "&player_count="+player_count+
             "&is_goal="+is_goal) 
-    .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
     });
             }
