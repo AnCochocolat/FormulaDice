@@ -22,13 +22,13 @@ $result=get_DB($start_sql);
 //スタートナンバーを変数に
 $start_number=(int)$result['start_c'];
 
-//スタートフラグ
+/* //スタートフラグ
 $start_check=false;
 
 //スタートナンバーが1だったらゲーム開始
 if($start_number==1){
     $start_check=true;
-}
+} */
 
 //プレイヤーデータ
 $player_data=array();
@@ -51,7 +51,6 @@ switch($player_count){
     $param=[
         'player_count'=>1,
         'name0'=>$player_data[0],
-        'is_start'=> $start_check,
         'is_start_number'=>$start_number
     ];
     break;
@@ -61,7 +60,6 @@ switch($player_count){
         'player_count'=>2,
         'name0'=>$player_data[0],
         'name1'=>$player_data[1],
-        'is_start'=> $start_check,
         'is_start_number'=>$start_number
     ];
     break;
@@ -72,7 +70,6 @@ switch($player_count){
         'name0'=>$player_data[0],
         'name1'=>$player_data[1],
         'name2'=>$player_data[2],
-        'is_start'=> $start_check,
         'is_start_number'=>$start_number
     ];
 
@@ -85,7 +82,6 @@ switch($player_count){
         'name1'=>$player_data[1],
         'name2'=>$player_data[2],
         'name3'=>$player_data[3],
-        'is_start'=> $start_check,
         'is_start_number'=>$start_number
     ];
     break;
