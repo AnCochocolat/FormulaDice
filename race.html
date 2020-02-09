@@ -189,6 +189,7 @@ if(players_mileage[player_count] >= max_distance){
     players[player_count].querySelector("#current-mileage").innerHTML = max_distance;
         players[player_count].querySelector("#remain-distance").innerHTML = "GOAL!"; 
         document.getElementById("roll-dice").disabled = "disabled";
+        document.getElementById("attack-mode").disabled = "disabled";
         e.preventDefault();
         return;       
 }
