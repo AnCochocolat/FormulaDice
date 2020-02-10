@@ -260,18 +260,22 @@ function SetParam(){
 }
     //プレイヤーのターンを更新
     function TurnUpdate(){
-        alert(number_of_people + " " + player_count + " " + players_mileage[player_count] + " " + event_mileage[player_count]);
+
         //increase player count
     player_count++;
 //return player count
-    if(player_count => number_of_people){
+    if(player_count >= number_of_people){
         player_count = 0;
     }
+    alert(number_of_people + " " + player_count + " " + players_mileage[player_count] + " " + event_mileage[player_count]);
     document.getElementById("roll-dice").disabled = "disabled";
     let counter01 = 0;
     let timer01 = setInterval(() => {
         counter01++;
-        for(let i = 0;i < number_of_people;i++){
+
+        //after 1 seconds set players status in database
+        if(counter01 > 1){
+            for(let i = 0;i < number_of_people;i++){
             fetch("/FormulaDice/api/room_update.php?id="+(i + 1)+
             "&current_mileage="+players_mileage[i]+
             "&distance="+(max_distance - players_mileage[i])+
@@ -284,9 +288,6 @@ function SetParam(){
     .then( (json)=>{ // ここに受信時の処理 
     });
             }
-        //after 1 seconds set players status in database
-        if(counter01 > 1){
-
             clearInterval(timer01);
         }
     }, 1000);
