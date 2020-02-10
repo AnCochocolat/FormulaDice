@@ -271,10 +271,8 @@ function SetParam(){
     let counter01 = 0;
     let timer01 = setInterval(() => {
         counter01++;
-        //after 1 seconds set players status in database
-        if(counter01 > 1){
-            for(let i = 0;i < number_of_people;i++){
-            fetch("/FormulaDice/api/room_update.php?id="+i+
+        for(let i = 0;i < number_of_people;i++){
+            fetch("/FormulaDice/api/room_update.php?id="+(i + 1)+
             "&current_mileage="+players_mileage[i]+
             "&distance="+(max_distance - players_mileage[i])+
             "&event_mileage="+event_mileage[i]+
@@ -286,15 +284,9 @@ function SetParam(){
     .then( (json)=>{ // ここに受信時の処理 
     });
             }
-            /*document.getElementById("roll-dice").disabled = "";
-            document.querySelector("#player_name").innerHTML = "player" + (player_count + 1) + " :"
-            document.querySelector("#dice-number").innerHTML = "";
-            if(attack_mode_use[player_count] == 1){
-            document.getElementById("attack-mode").disabled = "disabled";
-            }
-            else{
-                document.getElementById("attack-mode").disabled = "";
-            }*/
+        //after 1 seconds set players status in database
+        if(counter01 > 1){
+
             clearInterval(timer01);
         }
     }, 1000);
