@@ -180,6 +180,7 @@ document.querySelector("#player_name").innerHTML = "player" + (player_count + 1)
 
     //サイコロを振ったときの処理
     document.querySelector("#roll-dice").addEventListener("click",(e)=>{
+
         if(players_attack_mode_count[player_count] > 0){
             dice_number = getRandom(-3,6);
             if(dice_number <= 0)dice_number = 0;
@@ -242,7 +243,6 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
 });
 function SetParam(){
     for(let i = 0;i < number_of_people;i++){
-            alert(i);
            fetch("/FormulaDice/api/room_get.php?num_count="+i+"&room_name="+query[3]) 
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
@@ -250,7 +250,6 @@ function SetParam(){
         event_mileage[i] = json["e_mileage"];
         players_attack_mode_count[i] = json["attack_mode_count"];
         attack_mode_use[i] = json["attack_use_count"];
-        alert(i + " " +  json["e_mileage"]);
         players[i].querySelector("#current-mileage").innerHTML = players_mileage[i];
         players[i].querySelector("#remain-distance").innerHTML = max_distance - json["mileage"];
         players[i].querySelector("#event-mileage").innerHTML = event_mileage[i];
@@ -261,6 +260,7 @@ function SetParam(){
 }
     //プレイヤーのターンを更新
     function TurnUpdate(){
+        alert(player_count + " " + players_mileage[player_count] + " " + event_mileage[player_count]);
         //increase player count
     player_count++;
 //return player count
