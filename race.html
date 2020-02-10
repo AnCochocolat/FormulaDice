@@ -166,7 +166,7 @@ alert(number_of_people);
     //set players status
         for(let i = 0;i < number_of_people;i++){
             alert(i);
-            fetch("/FormulaDice/api/room_get.php?num_count="+i+"&room_name="+query[3]) 
+          /*  fetch("/FormulaDice/api/room_get.php?num_count="+i+"&room_name="+query[3]) 
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
         players_mileage[i] = json["mileage"];
@@ -179,7 +179,7 @@ alert(number_of_people);
         players[i].querySelector("#event-mileage").innerHTML = event_mileage[i];
     //document.querySelector("#text-question").innerHTML = json["text"];
     //document.querySelector("#qid").value = json["qid"];
-    });
+    });*/
         }
 
     //check player turn if  is you not your turn disabled buttons
@@ -236,7 +236,7 @@ else if(players_mileage[player_count] <= 0){
 }
 
         if(event_mileage[player_count] <= 0){
-            event_mileage[player_count] = event_start_mileage;
+            event_mileage[player_count] = 20;
             players[player_count].querySelector("#event-mileage").innerHTML = event_mileage[player_count];
             EventUpdate();
             TurnUpdate();
