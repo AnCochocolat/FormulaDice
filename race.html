@@ -241,8 +241,8 @@ document.querySelector("#attack-mode").addEventListener("click",(e)=>{
     TurnUpdate();
 });
 function SetParam(){
-    for(var i2 = 0;i2 < number_of_people;i2++){
-            alert(i2);
+    for(let i = 0;i < number_of_people;i++){
+            alert(i);
            fetch("/FormulaDice/api/room_get.php?num_count="+i+"&room_name="+query[3]) 
     .then( (res)=>{ return res.json(); }) 
     .then( (json)=>{ // ここに受信時の処理 
