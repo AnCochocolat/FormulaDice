@@ -176,7 +176,7 @@ document.querySelector("#player_name").innerHTML = "player" + (player_count + 1)
     document.querySelector("#roll-dice").addEventListener("click",(e)=>{
 
         if(players_attack_mode_count[player_count] > 0){
-            dice_number = getRandom(-3,6);
+            dice_number = getRandom(-1,6);
             if(dice_number <= 0)dice_number = 0;
             dice_result = attack_dice[dice_number];
             players_mileage[player_count] += dice_result;
