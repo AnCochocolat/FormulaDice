@@ -35,7 +35,7 @@ add_DB($sql);
 $goal=$_GET['is_goal'];
 
 //ゴールしたかどうかでテーブルのゴール判定を変更
-if($goal)
+if($goal=="true")
 {
     //テーブルの値を更新するsqlを作成
     $update_sql="update $room set _c_mileage=$c_mileage,
